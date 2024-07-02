@@ -1,0 +1,24 @@
+@import '../styles/variables.scss';
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 14px 15%;
+    max-height: 90px;
+    border-bottom: 1px solid $border-color;
+    gap: 32px;
+    min-width: 600px;
+}
+
+.left,
+.right {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.iconTextGroup {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
