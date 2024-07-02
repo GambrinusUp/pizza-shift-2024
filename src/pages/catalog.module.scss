@@ -1,0 +1,17 @@
+.container {
+    display: grid;
+    grid-template-columns: repeat(3, 300px);
+    justify-content: center;
+    gap: 32px;
+    row-gap: 48px;
+    margin-top: 48px;
+    margin-bottom: 48px;
+
+    @media (max-width: 1000px) {
+        grid-template-columns: repeat(2, 300px);
+    }
+
+    @media (max-width: 700px) {
+        grid-template-columns: repeat(1, 300px);
+    }
+}
