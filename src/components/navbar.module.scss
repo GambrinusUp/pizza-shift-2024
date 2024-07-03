@@ -1,6 +1,10 @@
 @import '../styles/variables.scss';
 
 .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     display: flex;
     justify-content: space-between;
     padding: 14px 15%;
@@ -8,6 +12,8 @@
     border-bottom: 1px solid $border-color;
     gap: 32px;
     min-width: 600px;
+    background-color: white;
+    z-index: 1000;
 }
 
 .left,
