@@ -1,0 +1,25 @@
+.segmentedControl {
+    display: flex;
+    border-radius: 14px;
+    overflow: hidden;
+    background-color: #F3F4F6;
+    font-size: 14px;
+  
+    .segment {
+      flex: 1;
+      padding: 10px 20px;
+      text-align: center;
+      cursor: pointer;
+      color: #637083;
+      transition: background-color 0.3s, color 0.3s, border-radius 0.3s;
+  
+      &.selected {
+        background-color: #fff;
+        color: #000;
+        //margin: 2px;
+        box-shadow: inset 0 0 0 2px #F3F4F6;
+        border-radius: 14px;
+      }
+    }
+  }
+  

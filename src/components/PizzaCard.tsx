@@ -1,21 +1,20 @@
+import { API_URL } from "../api/pizzaAPI";
 import Button from "../ui/Button";
-import styles from "./card.module.scss"
+import styles from "./card.module.scss";
 
 interface CardProps {
     image: string;
     title: string;
     description: string;
     cost: number;
+    onButtonClick: () => void;
 }
 
-const URL: string = "https://shift-backend.onrender.com"
-
-function PizzaCard({ image, title, description, cost }: CardProps) {
-
+function PizzaCard({ image, title, description, cost, onButtonClick }: CardProps) {
     return (
         <div className={styles.cardContainer}>
             <div className={styles.imageContainer}>
-                <img src={URL + image} alt={title} className={styles.cardImage}/>
+                <img src={API_URL + image} alt={title} className={styles.cardImage}/>
             </div>
             <div className={styles.cardDescriptionContainer}>
                 <span className={styles.cardTitle}>
@@ -29,7 +28,7 @@ function PizzaCard({ image, title, description, cost }: CardProps) {
                 <span className={styles.cardPrice}>
                     от {cost} ₽
                 </span>
-                <Button text="Выбрать" onClick={() => console.log('тык')}/>
+                <Button text="Выбрать" onClick={onButtonClick}/>
             </div>
         </div>
     )

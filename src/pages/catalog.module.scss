@@ -65,3 +65,22 @@ $orange: #F4511E;
       transform: rotate(450deg);
     }
   }
+
+.modalContainer {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  gap: 24px;
+}
+
+.modalDescription {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 400px;
+}
+
+.modalImage {
+  width: 220px;
+  height: 220px;
+}

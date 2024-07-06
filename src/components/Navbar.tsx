@@ -1,10 +1,10 @@
 /// <reference types="vite-plugin-svgr/client" />
-import PizzaIcon from "../assets/icon.svg?react"
-import ProfileIcon from "../assets/profile.svg?react"
-import OrdersIcon from "../assets/orders.svg?react"
-import CartIcon from "../assets/cart.svg?react"
-import ExitIcon from "../assets/exit.svg?react"
-import styles from "./navbar.module.scss"
+import PizzaIcon from "../assets/icon.svg?react";
+import ProfileIcon from "../assets/profile.svg?react";
+import OrdersIcon from "../assets/orders.svg?react";
+import CartIcon from "../assets/cart.svg?react";
+import ExitIcon from "../assets/exit.svg?react";
+import styles from "./navbar.module.scss";
 
 function Navbar() {
     return (
@@ -34,4 +34,4 @@ function Navbar() {
     )
 }
 
-export default Navbar
+export default Navbar;
