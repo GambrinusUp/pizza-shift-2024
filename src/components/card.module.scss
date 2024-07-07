@@ -1,3 +1,5 @@
+@import '../styles/center-mixin.scss';
+
 .cardContainer {
     display: flex;
     flex-direction: column;
@@ -7,9 +9,10 @@
 }
 
 .imageContainer {
-    display: flex;
+    /*display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center;*/
+    @include center-block;
 }
 
 .cardImage {

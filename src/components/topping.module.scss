@@ -1,9 +1,12 @@
+@import '../styles/center-mixin.scss';
+
 .toppingCardContainer {
     max-width: 120px;
     max-height: 200px;
-    display: flex;
+    /*display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center;*/
+    @include center-block;
     flex-direction: column;
     gap: 12px;
     padding: 8px;
