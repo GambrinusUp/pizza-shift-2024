@@ -1,16 +1,17 @@
-import { API_URL } from "../api/pizzaAPI";
-import Button from "../ui/Button";
 import styles from "./card.module.scss";
 
+import { API_URL } from "../api/pizzaAPI";
+import Button from "../ui/Button";
+
 interface CardProps {
-    image: string;
+    image: string;  
     title: string;
     description: string;
     cost: number;
-    onButtonClick: () => void;
+    addPizzaToCart: () => void;
 }
 
-function PizzaCard({ image, title, description, cost, onButtonClick }: CardProps) {
+function PizzaCard({ image, title, description, cost, addPizzaToCart }: CardProps) {
     return (
         <div className={styles.cardContainer}>
             <div className={styles.imageContainer}>
@@ -28,7 +29,7 @@ function PizzaCard({ image, title, description, cost, onButtonClick }: CardProps
                 <span className={styles.cardPrice}>
                     от {cost} ₽
                 </span>
-                <Button text="Выбрать" onClick={onButtonClick}/>
+                <Button text="Выбрать" onClick={addPizzaToCart}/>
             </div>
         </div>
     )

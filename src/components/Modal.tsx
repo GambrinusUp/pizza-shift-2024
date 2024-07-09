@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+
 import styles from "./modal.module.scss";
 
 interface ModalType {
@@ -7,13 +8,13 @@ interface ModalType {
     toggle: () => void;
 }
 
-function Modal(props: ModalType) {
+function Modal({ children, isOpen, toggle }: ModalType) {
     return (
         <>
-            {props.isOpen && (
-                <div className={styles.modalOverlay} onClick={props.toggle}>
+            {isOpen && (
+                <div className={styles.modalOverlay} onClick={toggle}>
                     <div onClick={(e) => e.stopPropagation()} className={styles.modalBox}>
-                        {props.children}
+                        {children}
                     </div>
                 </div>
             )}

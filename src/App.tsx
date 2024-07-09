@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import PizzaCatalog from './pages/PizzaCatalog'
+
 import Navbar from './components/Navbar'
+import PizzaCatalog from './pages/PizzaCatalog'
 
 function App() {
   return (

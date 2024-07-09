@@ -1,12 +1,14 @@
 import { useEffect } from "react";
+
 import styles from "./catalog.module.scss";
+
 import PizzaCard from "../components/PizzaCard";
-import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import { getPizzasList } from "../store/ActionCreators";
-import useModal from "../hooks/useModal";
-import { selectPizza, setSelectDough, setSelectSize } from '../store/PizzaSlice';
 import PizzaModal from "../components/PizzaModal";
 import { getPizzaDoughsName, getPizzaSizeName } from "../helpers/pizzaTranslation";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
+import useModal from "../hooks/useModal";
+import { getPizzasList } from "../store/ActionCreators";
+import { selectPizza, setSelectDough, setSelectSize } from '../store/PizzaSlice';
 
 function PizzaCatalog() {
   const dispatch = useAppDispatch();
@@ -21,8 +23,8 @@ function PizzaCatalog() {
   return (
     <>
       {isLoading ? (
-        <div style={{display:"flex", justifyContent: "center", alignItems: "center", height: "100vh"}}>
-          <svg className={styles.spinner} width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+        <div className={styles.svg_container}>
+          <svg className={styles.loader} width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
             <circle className={styles.path} fill="none" strokeWidth="6" strokeLinecap="round" cx="33" cy="33" r="30"></circle>
           </svg>
         </div>
@@ -35,7 +37,7 @@ function PizzaCatalog() {
               title={pizza.name}
               description={pizza.description}
               cost={pizza.sizes[0].price}
-              onButtonClick={() => {
+              addPizzaToCart={() => {
                 toggle(); 
                 dispatch(selectPizza(pizza));
                 dispatch(setSelectSize({ name: getPizzaSizeName(pizza.sizes[0].name), price: pizza.sizes[0].price }));

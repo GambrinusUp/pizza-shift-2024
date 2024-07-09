@@ -1,12 +1,14 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Pizza, Topping } from "../types.ts";
+
 import { getPizzasList } from "./ActionCreators.ts";
+
+import { Dough, Pizza, Size, Topping } from "../types.ts";
 
 export interface PizzaState {
     pizzas: Pizza[];
     selectedPizza: Pizza;
-    selectedSize: { name: string, price: number };
-    selectedDough: { name: string, price: number };
+    selectedSize: Size; //{ name: string, price: number }
+    selectedDough: Dough;
     selectedToppings: Topping[];
     isLoading: boolean;
     error: string;
@@ -54,20 +56,17 @@ export const pizzaSlice = createSlice({
     initialState,
     reducers: {
         selectPizza(state, action: PayloadAction<Pizza>) {
-            console.log(action.payload);
             state.selectedPizza = action.payload;
             state.selectedSize = { name: '', price: 0 };
             state.selectedDough = { name: '', price: 0 };
             state.selectedToppings = [];
             state.totalPrice = 0;
         },
-        setSelectSize(state, action: PayloadAction<{ name: string, price: number }>) {
-            console.log(action.payload);
+        setSelectSize(state, action: PayloadAction<Size>) { //{ name: string, price: number }
             state.selectedSize = action.payload;
             pizzaSlice.caseReducers.calculateTotalPrice(state);
         },
-        setSelectDough(state, action: PayloadAction<{ name: string, price: number }>) {
-            console.log(action.payload);
+        setSelectDough(state, action: PayloadAction<Dough>) {
             state.selectedDough = action.payload;
             pizzaSlice.caseReducers.calculateTotalPrice(state);
         },
@@ -88,7 +87,6 @@ export const pizzaSlice = createSlice({
             state.totalPrice = 0;
         },
         calculateTotalPrice(state) {
-            console.log(state.selectedSize.price, state.selectedDough.price);
             const toppingsPrice = state.selectedToppings.reduce((acc, topping) => acc + topping.cost, 0);
             state.totalPrice = state.selectedSize.price + state.selectedDough.price + toppingsPrice;
         }

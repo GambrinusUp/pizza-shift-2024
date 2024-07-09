@@ -1,15 +1,16 @@
 import { useState } from 'react';
+
 import styles from './control.module.scss';
 
-export type Segment = {
+export interface Segment {
   name: string;
   price: number;  
-};
+}
 
-type SegmentedControlProps = {
+interface SegmentedControlProps {
   segments: Segment[];
   onSegmentChange: (segment: Segment) => void;
-};
+}
 
 function SegmentedControl ({ segments, onSegmentChange }: SegmentedControlProps) {
   const [selectedSegment, setSelectedSegment] = useState<Segment | null>(segments[0]);
@@ -21,9 +22,9 @@ function SegmentedControl ({ segments, onSegmentChange }: SegmentedControlProps)
 
   return (
     <div className={styles.segmentedControl}>
-      {segments.map((segment) => (
+      {segments.map((segment, index) => (
         <div
-          key={segment.price}
+          key={index}
           className={`${styles.segment} ${selectedSegment?.price === segment.price ? styles.selected : ''}`}
           onClick={() => handleSegmentClick(segment)}
         >

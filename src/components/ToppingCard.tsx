@@ -1,28 +1,29 @@
 /// <reference types="vite-plugin-svgr/client" />
+import styles from "./topping.module.scss";
+
 import { API_URL } from "../api/pizzaAPI";
 import SelectIcon from "../assets/select.svg?react";
-import styles from "./topping.module.scss";
 
 interface ToppingCardProps {
     image: string;
-    name: string;
-    price: number;
+    toppingName: string;
+    toppingPrice: number;
     isSelected: boolean;
-    onClick: () => void;
+    onToppingSelect: () => void;
 }
 
-function ToppingCard({ image, name, price, isSelected, onClick }: ToppingCardProps) {
+function ToppingCard({ image, toppingName, toppingPrice, isSelected, onToppingSelect }: ToppingCardProps) {
     return (
         <div className={`${styles.toppingCardContainer} ${isSelected ? styles.selected : ''}`}
-            onClick={onClick}>
+            onClick={onToppingSelect}>
             <img className={styles.toppingCardImage} 
-                src={API_URL + image} alt={name} />
+                src={API_URL + image} alt={toppingName} />
             {isSelected && <SelectIcon className={styles.selectedIcon} />}
             <span className={styles.toppingCardName}>
-                {name}
+                {toppingName}
             </span>
             <span className={styles.toppingCardPrice}>
-                {price} ₽
+                {toppingPrice} ₽
             </span>
         </div>
     )

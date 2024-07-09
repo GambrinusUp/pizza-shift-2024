@@ -1,5 +1,6 @@
-import { Ingridient } from "../types";
 import { getPizzaIngredientsName } from "./pizzaTranslation";
+
+import { Ingridient } from "../types";
 
 export function ingredientsToString(ingredients: Ingridient[]): string {
     return ingredients.map((ingredient, index) => {

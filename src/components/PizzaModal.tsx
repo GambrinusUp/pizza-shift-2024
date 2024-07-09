@@ -1,20 +1,22 @@
 import styles from "./pizza.module.scss";
+
+import ToppingCard from "./ToppingCard";
+
+import { API_URL } from "../api/pizzaAPI";
 import SegmentedControl, { Segment } from "../components/SegmentedControl";
+import { ingredientsToString } from "../helpers/ingredientsToString";
+import { getPizzaSizeName, getPizzaDoughsName, getPizzaIngredientsName } from "../helpers/pizzaTranslation";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
+import { setSelectSize, setSelectDough, toggleTopping } from '../store/PizzaSlice';
 import { Topping } from "../types";
 import Button from "../ui/Button";
-import ToppingCard from "./ToppingCard";
-import { getPizzaSizeName, getPizzaDoughsName, getPizzaIngredientsName } from "../helpers/pizzaTranslation";
-import { setSelectSize, setSelectDough, toggleTopping } from '../store/PizzaSlice';
-import { ingredientsToString } from "../helpers/ingredientsToString";
-import { API_URL } from "../api/pizzaAPI";
 
 interface ModalType {
     isOpen: boolean;
     toggle: () => void;
 }
 
-function PizzaModal(props: ModalType) {
+function PizzaModal({ isOpen, toggle }: ModalType) {
     const dispatch = useAppDispatch();
     const { selectedPizza, selectedSize, selectedDough, selectedToppings, totalPrice } = useAppSelector(state => state.pizzaStore);
 
@@ -34,18 +36,16 @@ function PizzaModal(props: ModalType) {
 
     const handleSizeChange = (segment: Segment) => {
         dispatch(setSelectSize(segment));
-        console.log('Selected size segment:', segment);
     };
 
     const handleDoughChange = (segment: Segment) => {
         dispatch(setSelectDough(segment));
-        console.log('Selected dough segment:', segment);
     };
 
     return (
         <>
-            {props.isOpen && (
-                <div className={styles.modalOverlay} onClick={props.toggle}>
+            {isOpen && (
+                <div className={styles.modalOverlay} onClick={toggle}>
                     <div onClick={(e) => e.stopPropagation()} className={styles.modalBox}>
                         <div className={styles.modalContainer}>
                             <div className={styles.modalImage}>
@@ -77,18 +77,15 @@ function PizzaModal(props: ModalType) {
                                         <ToppingCard 
                                             key={topping.name}
                                             image={topping.img}
-                                            name={getPizzaIngredientsName(topping.name)}
-                                            price={topping.cost}
+                                            toppingName={getPizzaIngredientsName(topping.name)}
+                                            toppingPrice={topping.cost}
                                             isSelected={selectedToppings.some(t => t.name === topping.name)}
-                                            onClick={() => handleToppingClick(topping)}
+                                            onToppingSelect={() => handleToppingClick(topping)}
                                         />
                                     ))}
                                 </div>
                                 <Button text={"В корзину за " + totalPrice + " ₽"} 
-                                    onClick={() => {
-                                        console.log(selectedPizza, selectedToppings, 
-                                            selectedSize, selectedDough, totalPrice);
-                                        props.toggle()}}/>
+                                    onClick={() => {toggle()}}/>
                             </div>
                         </div>
                     </div>
