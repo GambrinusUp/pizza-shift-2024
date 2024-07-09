@@ -1,0 +1,92 @@
+@use 'sass:math';
+@import '../styles/center-mixin.scss';
+
+$orange: #F4511E;
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(3, 300px);
+    justify-content: center;
+    gap: 32px;
+    row-gap: 48px;
+    margin-top: 116px;
+    margin-bottom: 48px;
+
+    @media (max-width: 1000px) {
+        grid-template-columns: repeat(2, 300px);
+    }
+
+    @media (max-width: 700px) {
+        grid-template-columns: repeat(1, 300px);
+    }
+}
+
+.loader {
+    animation: rotator 1.4s linear infinite;
+  }
+  
+  @keyframes rotator {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(270deg);
+    }
+  }
+  
+  .path {
+    stroke-dasharray: 187;
+    stroke-dashoffset: 0;
+    transform-origin: center;
+    animation:
+      dash 1.4s ease-in-out infinite, 
+      colors 5.6s ease-in-out infinite;
+  }
+  
+  @keyframes colors {
+    0% {
+      stroke: $orange;
+    }
+    100% {
+      stroke: $orange;
+    }
+  }
+  
+  @keyframes dash {
+    0% {
+      stroke-dashoffset: 187;
+      transform: rotate(0deg);
+    }
+    50% {
+      stroke-dashoffset: 46.75; /* 187/4 */
+      transform: rotate(135deg);
+    }
+    100% {
+      stroke-dashoffset: 187;
+      transform: rotate(450deg);
+    }
+  }
+
+.modalContainer {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  gap: 24px;
+}
+
+.modalDescription {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 400px;
+}
+
+.modalImage {
+  width: 220px;
+  height: 220px;
+}
+
+.svg_container {
+  @include center-block;
+  height: 100vh;
+}
