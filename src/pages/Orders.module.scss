@@ -1,0 +1,17 @@
+@import '../styles/center-mixin.scss';
+
+.container {
+    @include column-block;
+    max-width: 1000px;
+}
+
+.title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.title span {
+    font-size: 14px;
+    color: #637083;
+}

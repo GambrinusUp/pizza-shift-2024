@@ -2,13 +2,13 @@ import { ReactNode } from "react";
 
 import styles from "./modal.module.scss";
 
-interface ModalType {
+interface ModalParams {
     children?: ReactNode;
     isOpen: boolean;
     toggle: () => void;
 }
 
-function Modal({ children, isOpen, toggle }: ModalType) {
+function Modal({ children, isOpen, toggle }: ModalParams) {
     return (
         <>
             {isOpen && (

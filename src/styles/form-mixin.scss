@@ -1,0 +1,28 @@
+@mixin form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+@mixin title {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+@mixin form-group-label {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+@mixin form-group-input {
+    padding: 12px 8px 12px 12px;
+    max-height: 48px;
+    border: 1px solid #CED2DA;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #000000;
+
+    &::placeholder {
+        color: #637083;
+    }
+}

@@ -2,6 +2,8 @@ import { useState } from 'react';
 
 import styles from './control.module.scss';
 
+import { getPizzaDoughsName, getPizzaSizeName } from '../helpers/pizzaTranslation';
+
 export interface Segment {
   name: string;
   price: number;  
@@ -9,11 +11,13 @@ export interface Segment {
 
 interface SegmentedControlProps {
   segments: Segment[];
+  initialSegment: Segment;
   onSegmentChange: (segment: Segment) => void;
+  type: string;
 }
 
-function SegmentedControl ({ segments, onSegmentChange }: SegmentedControlProps) {
-  const [selectedSegment, setSelectedSegment] = useState<Segment | null>(segments[0]);
+function SegmentedControl ({ segments, initialSegment, onSegmentChange, type }: SegmentedControlProps) {
+  const [selectedSegment, setSelectedSegment] = useState<Segment | null>(initialSegment);
 
   const handleSegmentClick = (segment: Segment) => {
     setSelectedSegment(segment);
@@ -25,10 +29,10 @@ function SegmentedControl ({ segments, onSegmentChange }: SegmentedControlProps)
       {segments.map((segment, index) => (
         <div
           key={index}
-          className={`${styles.segment} ${selectedSegment?.price === segment.price ? styles.selected : ''}`}
+          className={`${styles.segment} ${selectedSegment?.name === segment.name ? styles.selected : ''}`}
           onClick={() => handleSegmentClick(segment)}
         >
-          {segment.name}
+          {type === 'size' ? (getPizzaSizeName(segment.name))  : (getPizzaDoughsName(segment.name))}
         </div>
       ))}
     </div>

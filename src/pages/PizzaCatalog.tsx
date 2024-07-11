@@ -4,7 +4,6 @@ import styles from "./catalog.module.scss";
 
 import PizzaCard from "../components/PizzaCard";
 import PizzaModal from "../components/PizzaModal";
-import { getPizzaDoughsName, getPizzaSizeName } from "../helpers/pizzaTranslation";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import useModal from "../hooks/useModal";
 import { getPizzasList } from "../store/ActionCreators";
@@ -40,12 +39,12 @@ function PizzaCatalog() {
               addPizzaToCart={() => {
                 toggle(); 
                 dispatch(selectPizza(pizza));
-                dispatch(setSelectSize({ name: getPizzaSizeName(pizza.sizes[0].name), price: pizza.sizes[0].price }));
-                dispatch(setSelectDough({ name: getPizzaDoughsName(pizza.doughs[0].name), price: pizza.doughs[0].price }));
+                dispatch(setSelectSize({ name: (pizza.sizes[0].name), price: pizza.sizes[0].price }));
+                dispatch(setSelectDough({ name: (pizza.doughs[0].name), price: pizza.doughs[0].price }));
               }}
             />
           ))}
-          <PizzaModal isOpen={isOpen} toggle={toggle} />
+          <PizzaModal isOpen={isOpen} toggle={toggle} type="add" />
         </div>
       )}
     </>

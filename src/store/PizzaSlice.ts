@@ -7,7 +7,7 @@ import { Dough, Pizza, Size, Topping } from "../types.ts";
 export interface PizzaState {
     pizzas: Pizza[];
     selectedPizza: Pizza;
-    selectedSize: Size; //{ name: string, price: number }
+    selectedSize: Size;
     selectedDough: Dough;
     selectedToppings: Topping[];
     isLoading: boolean;
@@ -62,7 +62,7 @@ export const pizzaSlice = createSlice({
             state.selectedToppings = [];
             state.totalPrice = 0;
         },
-        setSelectSize(state, action: PayloadAction<Size>) { //{ name: string, price: number }
+        setSelectSize(state, action: PayloadAction<Size>) {
             state.selectedSize = action.payload;
             pizzaSlice.caseReducers.calculateTotalPrice(state);
         },

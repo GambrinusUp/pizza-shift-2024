@@ -1,0 +1,50 @@
+@import '../styles/center-mixin.scss';
+@import '../styles/form-mixin.scss';
+
+.container {
+    @include column-block;
+    max-width: 400px
+}
+
+.title {
+    @include title;
+}
+
+.info {
+    font-size: 16px;
+}
+
+.formGroup {
+    @include form-group;
+}
+
+.formGroup label {
+    @include form-group-label;
+}
+
+.formGroup input {
+    @include form-group-input;
+}
+
+.formGroup input.errorInput {
+    border-color: red;
+}
+
+.errorText {
+    color: red;
+    font-size: 12px;
+}
+
+.retryContainer {
+    display: flex;
+    justify-content: center;
+    font-size: 14px;
+    color: #97A1AF;
+}
+
+.retryLink {
+    color: #344051;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
