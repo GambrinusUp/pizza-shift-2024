@@ -6,9 +6,9 @@
 }
 
 .title {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    grid-template-columns: repeat(4, 1fr);
+    width: 100%;
+    display: grid;
 }
 
 .title span {

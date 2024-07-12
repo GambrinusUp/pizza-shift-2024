@@ -15,8 +15,7 @@ function Navbar() {
     const navigate = useNavigate();
     const token = localStorage.getItem("token");
 
-    useEffect(() => {
-        
+    useEffect(() => {    
         if (token) {
             setIsLoggedIn(true);
         }
@@ -38,7 +37,7 @@ function Navbar() {
                 </div>)}
                 {isLoggedIn && (<div className={styles.iconTextGroup}>
                     <OrdersIcon />
-                    Заказы
+                    <Link className={styles.link_text} to='/orders'>Заказы</Link>
                 </div>)}
             </div>
             <div className={styles.right}>

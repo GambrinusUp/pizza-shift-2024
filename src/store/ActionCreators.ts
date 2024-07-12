@@ -136,3 +136,44 @@ export const getOrders = createAsyncThunk<
         }
     }
 );
+
+export const getOrderById = createAsyncThunk<
+    Order,
+    string,
+    { rejectValue: string }
+>(
+    'userSlice/getOrderById',
+    async (id, { rejectWithValue }) => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            return rejectWithValue('Нет доступного токена');
+        }
+        try {
+            const response = await orderAPI.getOrder(token, id);
+            console.log(response);
+            return response.order;
+        } catch (e) {
+            return rejectWithValue(getErrorMessage(e));
+        }
+    }
+);
+
+export const cancelOrder = createAsyncThunk<
+    { success: boolean },
+    { orderId: string },
+    { rejectValue: string }
+>(
+    'orders/cancelOrder',
+    async ({ orderId }, { rejectWithValue }) => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            return rejectWithValue('Нет доступного токена');
+        }
+        try {
+            const response = await orderAPI.cancelOrder(token, orderId);
+            return response;
+        } catch (error) {
+            return rejectWithValue('Ошибка при отмене заказа');
+        }
+    }
+);

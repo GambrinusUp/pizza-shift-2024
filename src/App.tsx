@@ -4,6 +4,7 @@ import Navbar from './components/Navbar'
 import Authorization from './pages/Authorization'
 import CardDetails from './pages/CardDetails'
 import Cart from './pages/Cart'
+import OrderInfo from './pages/OrderInfo'
 import Orders from './pages/Orders'
 import PersonalDetails from './pages/PersonalDetails'
 import PizzaCatalog from './pages/PizzaCatalog'
@@ -21,6 +22,7 @@ function App() {
           <Route path='/authorization' element={<Authorization />} />
           <Route path='/profile' element={<Profile />} />
           <Route path='/orders' element={<Orders />} />
+          <Route path="/orders/:id" element={<OrderInfo />} />
         </Routes>
       </Router>
   )

@@ -1,0 +1,15 @@
+.container {
+    grid-template-columns: repeat(4, 1fr);
+    width: 100%;
+    display: grid;
+    padding-top: 24px;
+    border-top: 1px solid #E3E5E5;
+    font-size: 16px;
+}
+
+.link {
+    font-size: 12px;
+    color: #97A1AF;
+    cursor: pointer;
+    text-decoration: underline;
+}

@@ -91,8 +91,11 @@ export interface User {
 export type PartialPizzaPayment = Pick<PizzaPayment, 'id' | 'name' | 'toppings' | 'description' | 'size' | 'dough'>;
 
 export interface Order {
+    _id: string;
     person: Person;
     receiverAddress: ReceiverAddress;
     status: number;
     cancellable: boolean;
+    created: string;
+    updated: string;
 }
