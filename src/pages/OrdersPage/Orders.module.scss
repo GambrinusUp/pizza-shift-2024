@@ -1,0 +1,31 @@
+@import '../../styles/center-mixin.scss';
+@import '../../styles/loader-mixin.scss';
+
+.container {
+    @include column-block;
+    max-width: 1000px;
+}
+
+.title {
+    grid-template-columns: repeat(4, 1fr);
+    width: 100%;
+    display: grid;
+}
+
+.title span {
+    font-size: 14px;
+    color: #637083;
+}
+
+.loader {
+    @include loader-rotator;
+  }
+  
+  .path {
+    @include path-dash-colors;
+  }
+
+  .svg_container {
+    @include center-block;
+    height: 100vh;
+  }

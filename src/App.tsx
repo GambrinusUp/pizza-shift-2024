@@ -1,14 +1,14 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
-import Navbar from './components/Navbar'
-import Authorization from './pages/Authorization'
-import CardDetails from './pages/CardDetails'
-import Cart from './pages/Cart'
-import OrderInfo from './pages/OrderInfo'
-import Orders from './pages/Orders'
-import PersonalDetails from './pages/PersonalDetails'
-import PizzaCatalog from './pages/PizzaCatalog'
-import Profile from './pages/Profile'
+import Navbar from './components/Navbar/Navbar'
+import Authorization from './pages/AuthorizationPage/Authorization'
+import CardDetails from './pages/CardDetailsPage/CardDetails'
+import Cart from './pages/CartPage/Cart'
+import OrderInfo from './pages/OrderInfoPage/OrderInfo'
+import Orders from './pages/OrdersPage/Orders'
+import PersonalDetails from './pages/PersonalDetailsPage/PersonalDetails'
+import PizzaCatalog from './pages/PizzaCatalogPage/PizzaCatalog'
+import Profile from './pages/ProfilePage/Profile'
 
 function App() {
   return (
