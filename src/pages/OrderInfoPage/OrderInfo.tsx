@@ -15,11 +15,12 @@ function OrderInfo() {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const { order, isLoading } = useAppSelector(state => state.orderStore);
+    const isLoggedIn = useAppSelector(state => state.userStore);
     const { id } = useParams();
     const { isOpen, toggle } = useModal();
 
     useEffect(() => {
-        if (!localStorage.getItem('token'))
+        if (!isLoggedIn)
             navigate('/');
         if(id)
             dispatch(getOrderById(id));

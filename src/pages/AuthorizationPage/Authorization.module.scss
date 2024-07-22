@@ -14,27 +14,6 @@
     font-size: 16px;
 }
 
-.formGroup {
-    @include form-group;
-}
-
-.formGroup label {
-    @include form-group-label;
-}
-
-.formGroup input {
-    @include form-group-input;
-}
-
-.formGroup input.errorInput {
-    border-color: red;
-}
-
-.errorText {
-    color: red;
-    font-size: 12px;
-}
-
 .retryContainer {
     display: flex;
     justify-content: center;
@@ -47,4 +26,10 @@
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
+}
+
+.form_container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
 }

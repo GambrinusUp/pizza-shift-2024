@@ -1,27 +1,27 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
-import styles from "./Authorization.module.scss";
+import styles from './Authorization.module.scss';
 
-import { validatePhone } from "../../helpers/validatePhone";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { createCode, signIn } from "../../store/ActionCreators";
-import Button from "../../ui/Button/Button";
+import FormField from '../../components/FormField/FormField';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { createCode, signIn } from '../../store/ActionCreators';
+import Button from '../../ui/Button/Button';
+
+interface FormData {
+    phone: string;
+    code: string;
+}
 
 function Authorization() {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const { retryDelay, error } = useAppSelector(state => state.userStore);
-    
-    const [formData, setFormData] = useState({
-        phone: '',
-        code: ''
-    });
 
-    const [errors, setErrors] = useState({
-        phone: '',
-        code: ''
-    });
+    const methods = useForm<FormData>();
+    const { handleSubmit, setError, clearErrors, watch } = methods;
+    const phoneValue = watch("phone");
 
     const [showCodeInput, setShowCodeInput] = useState(false);
     const [countdown, setCountdown] = useState(retryDelay / 1000);
@@ -43,61 +43,29 @@ function Authorization() {
             return () => clearInterval(interval);
         }
     }, [retryDelay]);
-    
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setFormData({
-          ...formData,
-          [name]: value
-        });
-        setErrors({
-          ...errors,
-          [name]: ''
-        });
+
+    const handleContinue = (data: FormData) => {
+        const { phone } = data;
+        console.log(phone);
+        clearErrors("phone");
+        dispatch(createCode(phone));
     };
 
-    const handleContinue = () => {
-        const { phone } = formData;
-        let valid = true;
-        const newErrors = { phone: '', code: '' };
+    const handleLogin = async (data: FormData) => {
+        const result = await dispatch(signIn({ phone: data.phone, code: Number(data.code) }));
 
-        if (!phone) {
-            newErrors.phone = 'Поле "Номер телефона" должно быть заполнено.';
-            valid = false;
-        } else if (!validatePhone(phone)) {
-            newErrors.phone = 'Введите корректный номер телефона.';
-            valid = false;
-        }
-
-        setErrors(newErrors);
-
-        if (valid) {
-            dispatch(createCode(phone));
-        }
-    };
-
-    const handleLogin = async () => {
-        const { phone, code } = formData;
-        const result = await dispatch(signIn({ phone: phone, code: Number(code) }));
-    
-        // Check if the action is fulfilled
         if (result.meta.requestStatus === 'fulfilled') {
             navigate('/');
         }
     };
-    
 
     useEffect(() => {
         if (error) {
-            setErrors({
-                ...errors,
-                code: error
-            });
+            setError("code", { type: "manual", message: error });
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [error]);
-    
-    return(
+    }, [error, setError]);
+
+    return (
         <div className={styles.container}>
             <span className={styles.title}>
                 Авторизация
@@ -105,40 +73,45 @@ function Authorization() {
             <span className={styles.info}>
                 Введите номер телефона для входа в личный кабинет
             </span>
-            <div className={styles.formGroup}>
-                <input
-                    type="text"
-                    name="phone"
-                    placeholder="Телефон"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    className={errors.phone ? styles.errorInput : ''}
-                />
-                {errors.phone && <span className={styles.errorText}>{errors.phone}</span>}
-            </div>
-            {showCodeInput && (<div className={styles.formGroup}>
-                <input
-                    type="text"
-                    name="code"
-                    placeholder="Проверочный код"
-                    value={formData.code}
-                    onChange={handleChange}
-                    className={errors.code ? styles.errorInput : ''}
-                />
-                {errors.code && <span className={styles.errorText}>{errors.code}</span>}
-            </div>)}
-            <Button onClick={showCodeInput ? handleLogin : handleContinue} text={showCodeInput ? "Войти" : "Продолжить"} />
-            {showCodeInput && (
-                <div className={styles.retryContainer}>
-                    {countdown ? (
-                        <span>Повторная отправка кода через {countdown} секунд</span>
-                    ) : (
-                        <span className={styles.retryLink} onClick={() => dispatch(createCode(formData.phone))}>Отправить код снова</span>
+            <FormProvider {...methods}>
+                <form onSubmit={handleSubmit(showCodeInput ? handleLogin : handleContinue)} className={styles.form_container}>
+                    <FormField
+                        name="phone"
+                        label="Телефон"
+                        placeholder="+7 (999) 999-99-99"
+                        mask="+7 (999) 999-99-99"
+                        validation={{
+                            required: 'Поле "Номер телефона" должно быть заполнено.',
+                            pattern: {
+                                value: /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/,
+                                message: 'Введите корректный номер телефона.'
+                            }
+                        }}
+                    />
+                    {showCodeInput && (
+                        <FormField
+                            name="code"
+                            label="Проверочный код"
+                            placeholder="Проверочный код"
+                            validation={{
+                                required: 'Поле "Проверочный код" должно быть заполнено.'
+                            }}
+                        />
                     )}
-                </div>
-            )}
+                    <Button type="submit" text={showCodeInput ? "Войти" : "Продолжить"} />
+                    {showCodeInput && (
+                        <div className={styles.retryContainer}>
+                            {countdown ? (
+                                <span>Повторная отправка кода через {countdown} секунд</span>
+                            ) : (
+                                <span className={styles.retryLink} onClick={() => dispatch(createCode(phoneValue))}>Отправить код снова</span>
+                            )}
+                        </div>
+                    )}
+                </form>
+            </FormProvider>
         </div>
-    )
+    );
 }
 
 export default Authorization;

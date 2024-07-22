@@ -7,28 +7,12 @@
     max-width: 500px;
 }
 
+.form_container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
 .title {
     @include title;
-}
-
-.formGroup {
-    @include form-group;
-    max-width: 500px;
-}
-
-.formGroup label {
-    @include form-group-label;
-}
-
-.formGroup input {
-    @include form-group-input;
-}
-
-.formGroup input.errorInput {
-    border-color: red;
-}
-
-.errorText {
-    color: red;
-    font-size: 12px;
 }

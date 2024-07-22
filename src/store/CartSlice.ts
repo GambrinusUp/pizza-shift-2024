@@ -31,8 +31,6 @@ export interface CartState {
     pizzas: PizzaPayment[];
 }
 
-
-
 const initialState: CartState = {
     receiverAddress: {
         street: "",

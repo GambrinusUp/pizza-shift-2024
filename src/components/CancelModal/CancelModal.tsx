@@ -32,7 +32,7 @@ function CancelModal({ isOpen, toggle, id }: ModalParams) {
                         <span className={styles.title}>
                             Отменить заказ?
                         </span>
-                        <Button text="Отменить" type="transparent" onClick={cancel}/>
+                        <Button text="Отменить" variant="transparent" onClick={cancel}/>
                         <Button text="Не отменять" onClick={toggle}/>
                     </div>
                 </div>

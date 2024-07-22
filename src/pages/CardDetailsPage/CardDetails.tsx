@@ -1,15 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useForm, FormProvider } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 import styles from './CardDetails.module.scss';
 
+import FormField from '../../components/FormField/FormField';
 import SuccessModal from '../../components/SuccessModal/SuccessModal';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import useModal from '../../hooks/useModal';
 import { createtOrder, updateDebitCardInfo } from '../../store/CartSlice';
 import Button from '../../ui/Button/Button';
 
-interface Errors {
+interface CardData {
     number: string;
     expire: string;
     cvv: string;
@@ -21,83 +23,18 @@ function CardDetails() {
     const { receiverAddress, person } = useAppSelector(state => state.cartStore);
     const dispatch = useAppDispatch();
     
-    const [cardData, setCardData] = useState({
-        number: '',
-        expire: '',
-        cvv: ''
-    });
+    const methods = useForm<CardData>();
+    const { handleSubmit } = methods;
 
-    const [errors, setErrors] = useState<Errors>({
-        number: '',
-        expire: '',
-        cvv: ''
-    });
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setCardData({
-          ...cardData,
-          [name]: value
-        });
-        setErrors({
-          ...errors,
-          [name]: ''
-        });
-    };
-
-    const validateCardNumber = (number: string) => {
-        const cardNumberRegex = /^\d{4}\d{4}$/;
-        return cardNumberRegex.test(number);
-    };
-
-    const validateExpire = (expire: string) => {
-        const expireRegex = /^(0[1-9]|1[0-2])\/?([0-9]{2})$/;
-        return expireRegex.test(expire);
-    };
-
-    const validateCVV = (cvv: string) => {
-        const cvvRegex = /^\d{3}$/;
-        return cvvRegex.test(cvv);
-    };
-
-    const handlePay = () => {
-        const { number, expire, cvv } = cardData;
-        const newErrors: Errors = {
-            number: '',
-            expire: '',
-            cvv: ''
-        };
-
-        const validations = [
-            { field: 'number', value: number, message: 'Поле "Номер" должно быть заполнено.', validate: validateCardNumber, invalidMessage: 'Введите корректный номер карты в формате.' },
-            { field: 'expire', value: expire, message: 'Поле "Срок" должно быть заполнено.', validate: validateExpire, invalidMessage: 'Введите корректный срок действия.' },
-            { field: 'cvv', value: cvv, message: 'Поле "CVV" должно быть заполнено.', validate: validateCVV, invalidMessage: 'Введите корректный CVV.' },
-        ];
-
-        let valid = true;
-
-        validations.forEach(({ field, value, message, validate, invalidMessage }) => {
-            if (!value) {
-                newErrors[field as keyof Errors] = message;
-                valid = false;
-            } else if (validate && !validate(value)) {
-                newErrors[field as keyof Errors] = invalidMessage;
-                valid = false;
-            }
-        });
-
-        setErrors(newErrors);
-
-        if (valid) {
-            console.log('Оплатить', cardData);
-            dispatch(updateDebitCardInfo({
-                pan: cardData.number,
-                expireDate: cardData.expire,
-                cvv: cardData.cvv
-            }));
-            dispatch(createtOrder());
-            toggle();
-        }
+    const onSubmit = (data: CardData) => {
+        console.log('Оплатить', data);
+        dispatch(updateDebitCardInfo({
+            pan: data.number,
+            expireDate: data.expire,
+            cvv: data.cvv
+        }));
+        dispatch(createtOrder());
+        toggle();
     };
 
     useEffect(() => {
@@ -107,55 +44,59 @@ function CardDetails() {
         if (isReceiverAddressEmpty && isPersonEmpty) {
             navigate('/cart')
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [receiverAddress, person, navigate]);
 
     return (
         <div className={styles.container}>
             <span className={styles.title}>
                 Введите данные карты для оплаты
             </span>
-            <div className={styles.cardForm}>
-                <div className={styles.formGroup}>
-                    <label>Номер*</label>
-                    <input
-                        type="text"
-                        name="number"
-                        placeholder="0000 0000"
-                        value={cardData.number}
-                        onChange={handleChange}
-                        className={errors.number ? styles.errorInput : ''}
+            <FormProvider {...methods}>
+                <form onSubmit={handleSubmit(onSubmit)} className={styles.cardForm}>
+                    <FormField 
+                        name="number" 
+                        label="Номер*" 
+                        placeholder="0000 0000" 
+                        mask="9999 9999"
+                        validation={{
+                            required: 'Поле "Номер" должно быть заполнено.',
+                            pattern: {
+                                value: /^\d{4} \d{4}$/,
+                                message: 'Введите корректный номер карты (8 цифр).'
+                            }
+                        }}
                     />
-                    {errors.number && <span className={styles.errorText}>{errors.number}</span>}
-                </div>
-                <div className={styles.expireCvv}>
-                    <div className={styles.formGroup}>
-                        <label>Срок*</label>
-                        <input
-                            type="text"
-                            name="expire"
-                            placeholder="00/00"
-                            value={cardData.expire}
-                            onChange={handleChange}
-                            className={errors.expire ? styles.errorInput : ''}
+                    <div className={styles.expireCvv}>
+                        <FormField 
+                            name="expire" 
+                            label="Срок*" 
+                            placeholder="MM/YY" 
+                            mask="99/99"
+                            validation={{
+                                required: 'Поле "Срок" должно быть заполнено.',
+                                pattern: {
+                                    value: /^(0[1-9]|1[0-2])\/?([0-9]{2})$/,
+                                    message: 'Введите корректный срок действия (MM/YY).'
+                                }
+                            }}
                         />
-                        {errors.expire && <span className={styles.errorText}>{errors.expire}</span>}
-                    </div>
-                    <div className={styles.formGroup}>
-                        <label>CVV*</label>
-                        <input
-                            type="text"
-                            name="cvv"
-                            placeholder="000"
-                            value={cardData.cvv}
-                            onChange={handleChange}
-                            className={errors.cvv ? styles.errorInput : ''}
+                        <FormField
+                            name="cvv" 
+                            label="CVV*" 
+                            placeholder="000" 
+                            mask="999"
+                            validation={{
+                                required: 'Поле "CVV" должно быть заполнено.',
+                                pattern: {
+                                    value: /^\d{3}$/,
+                                    message: 'Введите корректный CVV (3 цифры).'
+                                }
+                            }}
                         />
-                        {errors.cvv && <span className={styles.errorText}>{errors.cvv}</span>}
                     </div>
-                </div>
-            </div>
-            <Button text="Оплатить" onClick={handlePay} />
+                    <Button text="Оплатить" type="submit" />
+                </form>
+            </FormProvider>
             <SuccessModal isOpen={isOpen} toggle={toggle} />
         </div>
     );

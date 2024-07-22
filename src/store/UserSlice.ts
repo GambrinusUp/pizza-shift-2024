@@ -4,9 +4,20 @@ import { createCode, getUserProfile, signIn, updateUserProfile } from "./ActionC
 
 import { User } from "../types";
 
+const loadTokenFromLocalStorage = () => {
+    try {
+        const token = localStorage.getItem('token');
+        return token ? token : '';
+    } catch (err) {
+        console.error("Could not load token", err);
+        return '';
+    }
+};
+
 export interface UserState {
     user: User;
     token: string;
+    isLoggedIn: boolean;
     code: string;
     error: string;
     retryDelay: number;
@@ -22,7 +33,8 @@ const initialState: UserState = {
         email: '',
         city: ''
     },
-    token: '',
+    token: loadTokenFromLocalStorage(),
+    isLoggedIn: !!loadTokenFromLocalStorage(),
     code: '',
     error: '',
     retryDelay: -1
@@ -34,6 +46,20 @@ export const UserSlice = createSlice({
     reducers: {
         clearRetry(state) {
             state.retryDelay = -1;
+        },
+        logout(state) {
+            state.token = '';
+            state.isLoggedIn = false;
+            state.user = {
+                _id: '',
+                phone: '',
+                firstname: '',
+                lastname: '',
+                middlename: '',
+                email: '',
+                city: ''
+            };
+            localStorage.removeItem('token');
         },
     },
     extraReducers: (builder) => {
@@ -85,6 +111,6 @@ export const UserSlice = createSlice({
     }
 })
 
-export const { clearRetry } = UserSlice.actions;
+export const { clearRetry, logout } = UserSlice.actions;
 
 export default UserSlice.reducer;

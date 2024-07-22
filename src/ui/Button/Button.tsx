@@ -3,12 +3,17 @@ import styles from "./button.module.scss"
 interface ButtonProps {
     text: string;
     onClick?: () => void;
-    type?: 'default' | 'transparent';
+    type?: 'button' | 'submit' | 'reset';
+    variant?: 'default' | 'transparent';
 }
 
-function Button({ text, onClick, type = 'default' }: ButtonProps) {
+function Button({ text, onClick, type = 'button', variant = 'default' }: ButtonProps) {
     return(
-        <button className={type === 'transparent' ? styles.transparentButton : styles.button} onClick={onClick}>
+        <button 
+            type={type} 
+            className={variant === 'transparent' ? styles.transparentButton : styles.button} 
+            onClick={onClick}
+        >
             {text}
         </button>
     )
