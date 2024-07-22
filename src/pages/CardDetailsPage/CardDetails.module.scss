@@ -1,0 +1,28 @@
+@import '../../styles/center-mixin.scss';
+@import '../../styles/form-mixin.scss';
+
+.container {
+    @include column-block;
+    max-width: 448px;
+}
+
+.title {
+    @include title;
+}
+
+.cardForm {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    height: 220px;
+    background-color: #F3F4F6;
+    border-radius: 16px;
+    padding: 24px;
+    gap: 16px;
+}
+
+.expireCvv {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+}

@@ -1,0 +1,25 @@
+@import '../../styles/variables.scss';
+
+.container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 116px;
+    justify-content: center;
+}
+
+.total {
+    padding-top: 24px;
+    border-top: 1px solid $border-color;
+    display: flex;
+    max-width: 960px;
+    width: 100%;
+    align-items: center;
+}
+
+.total_text {
+    font-size: 24px;
+    font-weight: 700;
+    width: 100%;
+}

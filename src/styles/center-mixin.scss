@@ -3,3 +3,11 @@
     justify-content: center;
     align-items: center;
 }
+
+@mixin column-block {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 116px;
+    padding-left: 240px;
+}

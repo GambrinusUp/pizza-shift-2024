@@ -1,0 +1,25 @@
+@import '../../styles/center-mixin.scss';
+@import '../../styles/form-mixin.scss';
+
+.container {
+    @include column-block;
+    margin-bottom: 24px;
+}
+
+.form_container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.title {
+    @include title;
+}
+
+.buttonGroup {
+    display: flex;
+    flex-direction: row;
+    max-width: 500px;
+    justify-content: space-between;
+    gap: 24px;
+}

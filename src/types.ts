@@ -45,3 +45,57 @@ export interface PizzaArray {
     success: string;
     catalog: Pizza[];
 }
+
+export interface ReceiverAddress {
+    street: string;
+    house: string;
+    apartment: string;
+    comment: string;
+}
+
+export interface Person {
+    firstname: string;
+    lastname: string;
+    middlename: string;
+    phone: string;
+}
+
+export interface DebitCard {
+    pan: string;
+    expireDate: string;
+    cvv: string;
+}
+
+export interface PizzaPayment {
+    id: string;
+    name: string;
+    toppings: Topping[];
+    description: string;
+    size: Size;
+    dough: Dough;
+    quantity: number;
+    image: string;
+    price: number;
+}
+
+export interface User {
+    _id: string;
+    phone: string;
+    firstname: string;
+    middlename: string;
+    lastname: string;
+    email: string;
+    city: string;
+}
+
+export type PartialPizzaPayment = Pick<PizzaPayment, 'id' | 'name' | 'toppings' | 'description' | 'size' | 'dough'>;
+
+export interface Order {
+    _id: string;
+    person: Person;
+    receiverAddress: ReceiverAddress;
+    status: number;
+    cancellable: boolean;
+    created: string;
+    updated: string;
+}

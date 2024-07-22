@@ -41,3 +41,15 @@ export function getPizzaDoughsName(dough: string): string {
 export function getPizzaIngredientsName(ingredient: string): string {
     return ingredients[ingredient];
 }
+
+const PizzaStatusMessages: { [key: number]: string } = {
+    0: 'Создан',
+    1: 'Ждёт курьера',
+    2: 'В пути',
+    3: 'Доставлен',
+    4: 'Отменён'
+};
+  
+export function getPizzaStatusName(status: number): string {
+    return PizzaStatusMessages[status];
+}

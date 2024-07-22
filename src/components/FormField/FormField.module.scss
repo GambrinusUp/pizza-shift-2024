@@ -1,0 +1,23 @@
+@import '../../styles/form-mixin.scss';
+
+.formGroup {
+    @include form-group;
+    max-width: 500px;
+}
+
+.formGroup label {
+    @include form-group-label;
+}
+
+.formGroup input {
+    @include form-group-input;
+}
+
+.formGroup input.errorInput {
+    border-color: red;
+}
+
+.errorText {
+    color: red;
+    font-size: 12px;
+}
